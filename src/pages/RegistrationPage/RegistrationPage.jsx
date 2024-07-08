@@ -1,6 +1,8 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "./RegistrationPage.module.css";
+import { useDispatch } from "react-redux";
+import { register } from "../../redux/auth/operation";
 
 const initialValues = {
   username: "",
@@ -18,11 +20,11 @@ const validationSchema = Yup.object({
     .required("Required"),
 });
 
-const handleSubmit = (values) => {
-  console.log(values);
-};
-
 export default function RegisterPage() {
+  const dispatch = useDispatch();
+  const handleSubmit = (values) => {
+    dispatch(register(values));
+  };
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>Register</h1>

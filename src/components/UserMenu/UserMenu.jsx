@@ -1,3 +1,7 @@
+import { useSelector } from "react-redux";
+import { selectorUserName } from "../../redux/auth/selectors";
+
 export default function UserMenu() {
-  return <div>Welcome user</div>;
+  const userName = useSelector(selectorUserName);
+  return <div>Welcome `${userName}` </div>;
 }
