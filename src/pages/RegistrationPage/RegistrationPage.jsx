@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "./RegistrationPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../redux/auth/operation";
+import { register } from "../../redux/auth/operations";
 import { selectorLoading } from "../../redux/auth/selectors";
 import LoaderProgress from "../../components/Loader/LoaderProgress";
 

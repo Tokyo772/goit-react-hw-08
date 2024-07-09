@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { logOut, login, refreshUser, register } from "./operation";
+import { logOut, login, refreshUser, register } from "./operations";
 
 const handlePending = (state) => {
   state.isLoading = true;

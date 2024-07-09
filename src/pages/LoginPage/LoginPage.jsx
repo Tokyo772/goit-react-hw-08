@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "./LoginPage.module.css";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/auth/operation";
+import { login } from "../../redux/auth/operations";
 
 const initialValues = {
   email: "",

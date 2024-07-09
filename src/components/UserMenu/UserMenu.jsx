@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 
 import { selectorUser, selectorLoading } from "../../redux/auth/selectors";
-import { logOut } from "../../redux/auth/operation.js";
+import { logOut } from "../../redux/auth/operations.js";
 
 import LoaderProgress from "../Loader/LoaderProgress";
 import styles from "./UserMenu.module.css";
