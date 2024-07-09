@@ -1,6 +1,8 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "./LoginPage.module.css";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/auth/operation";
 
 const initialValues = {
   email: "",
@@ -14,12 +16,13 @@ const validationSchema = Yup.object({
     .required("Required"),
 });
 
-const handleSubmit = (values, { setSubmitting }) => {
-  console.log(values);
-  setSubmitting(false);
-};
-
 export default function LoginPage() {
+  const dispatch = useDispatch();
+
+  const handleSubmit = (values, actions) => {
+    dispatch(login(values));
+    actions.resetForm();
+  };
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>Login</h1>
@@ -28,43 +31,37 @@ export default function LoginPage() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
-          <Form>
-            <div className={styles.formField}>
-              <Field
-                type="email"
-                name="email"
-                placeholder="Email"
-                className={styles.input}
-              />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-            <div className={styles.formField}>
-              <Field
-                type="password"
-                name="password"
-                placeholder="Password"
-                className={styles.input}
-              />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-            <button
-              type="submit"
-              className={styles.button}
-              disabled={isSubmitting}
-            >
-              Login
-            </button>
-          </Form>
-        )}
+        <Form>
+          <div className={styles.formField}>
+            <Field
+              type="email"
+              name="email"
+              placeholder="Email"
+              className={styles.input}
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className={styles.error}
+            />
+          </div>
+          <div className={styles.formField}>
+            <Field
+              type="password"
+              name="password"
+              placeholder="Password"
+              className={styles.input}
+            />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className={styles.error}
+            />
+          </div>
+          <button type="submit" className={styles.button}>
+            Login
+          </button>
+        </Form>
       </Formik>
     </div>
   );

@@ -1,17 +1,19 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "./RegistrationPage.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../redux/auth/operation";
+import { selectorLoading } from "../../redux/auth/selectors";
+import LoaderProgress from "../../components/Loader/LoaderProgress";
 
 const initialValues = {
-  username: "",
+  name: "",
   email: "",
   password: "",
 };
 
 const validationSchema = Yup.object({
-  username: Yup.string()
+  name: Yup.string()
     .min(3, "Username must be at least 3 characters")
     .required("Required"),
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -21,9 +23,11 @@ const validationSchema = Yup.object({
 });
 
 export default function RegisterPage() {
+  const loading = useSelector(selectorLoading);
   const dispatch = useDispatch();
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, actions) => {
     dispatch(register(values));
+    actions.resetForm();
   };
   return (
     <div className={styles.container}>
@@ -33,56 +37,50 @@ export default function RegisterPage() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
-          <Form>
-            <div className={styles.formField}>
-              <Field
-                type="text"
-                name="username"
-                placeholder="Username"
-                className={styles.input}
-              />
-              <ErrorMessage
-                name="username"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-            <div className={styles.formField}>
-              <Field
-                type="email"
-                name="email"
-                placeholder="Email"
-                className={styles.input}
-              />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-            <div className={styles.formField}>
-              <Field
-                type="password"
-                name="password"
-                placeholder="Password"
-                className={styles.input}
-              />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-            <button
-              type="submit"
-              className={styles.button}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Registering..." : "Register"}
-            </button>
-          </Form>
-        )}
+        <Form>
+          <div className={styles.formField}>
+            <Field
+              type="text"
+              name="name"
+              placeholder="Username"
+              className={styles.input}
+            />
+            <ErrorMessage
+              name="name"
+              component="div"
+              className={styles.error}
+            />
+          </div>
+          <div className={styles.formField}>
+            <Field
+              type="email"
+              name="email"
+              placeholder="Email"
+              className={styles.input}
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className={styles.error}
+            />
+          </div>
+          <div className={styles.formField}>
+            <Field
+              type="password"
+              name="password"
+              placeholder="Password"
+              className={styles.input}
+            />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className={styles.error}
+            />
+          </div>
+          <button type="submit" className={styles.button}>
+            {!loading ? "Register" : <LoaderProgress />}
+          </button>
+        </Form>
       </Formik>
     </div>
   );
